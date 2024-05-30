@@ -444,30 +444,32 @@ plt.suptitle('Ni=0 @citrato - 4ta repeticion',fontsize=14)
 plt.savefig('tau_Ni0_D_recubierta.png',dpi=300,facecolor='w')
 
 #%% PLOTEO TODOS LOS CICLOS PROMEDIO
-fig,ax=plt.subplots(constrained_layout=True)
+fig,(ax1,ax2)=plt.subplots(ncols=2,figsize=(10,4),constrained_layout=True)
 
 for i,fp in enumerate(filepaths_1):
     t,H,M,metadata=lector_ciclos(fp)
-    ax.plot(H,M,color='tab:blue',label=identif_1)
+    ax1.plot(H,M,color='tab:blue',label=identif_1)
 
 for i,fp in enumerate(filepaths_2):
     t,H,M,metadata=lector_ciclos(fp)
-    ax.plot(H,M,color='tab:orange',label=identif_2)
+    ax2.plot(H,M,color='tab:orange',label=identif_2)
 
 for i,fp in enumerate(filepaths_3):
     t,H,M,metadata=lector_ciclos(fp)
-    ax.plot(H,M,color='tab:green',label=identif_3)
+    ax1.plot(H,M,color='tab:green',label=identif_3)
 
 for i,fp in enumerate(filepaths_4):
     t,H,M,metadata=lector_ciclos(fp)
-    ax.plot(H,M,color='tab:red',label=identif_4)
-    
-#ax.text(0.95,0.1,f'<SAR> = {SAR4:.2uf} W/g',bbox=dict(alpha=0.8),transform=ax.transAxes,ha='right', va='bottom')
-ax.set_ylabel('M (A/m)')
-ax.set_xlabel('H (A/m)')
-ax.legend()
-ax.grid()
-plt.title('Ciclos promedio')
-plt.savefig('ciclos_promedio_all.png',dpi=300)
+    ax2.plot(H,M,color='tab:red',label=identif_4)
+ax1.set_title('38 kA/m')    
+ax2.set_title('57 kA/m')
 # plt.show()
+for ax in [ax1,ax2]:
+    ax.set_xlabel('H (A/m)')
+    ax.set_ylabel('M (A/m)')
+    ax.legend()
+    ax.grid()
+plt.suptitle('Ciclos promedio',fontsize=14)
+plt.savefig('ciclos_promedio_all.png',dpi=300)
+
 # %%
