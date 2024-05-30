@@ -178,10 +178,10 @@ def Tau_promedio(filepath,recorto_extremos=20):
     return Meq , H_mag, max(H)/1000, Tau , Tau_prom , fig
 #%% 135 10 
 identif_1='135_10'
-dir = os.path.join(os.getcwd(),identif_1)
-archivos_resultados = [f for f in os.listdir(dir) if  fnmatch.fnmatch(f, '*resultados*')]
+dir_1 = os.path.join(os.getcwd(),identif_1)
+archivos_resultados = [f for f in os.listdir(dir_1) if  fnmatch.fnmatch(f, '*resultados*')]
 archivos_resultados.sort()
-filepaths = [os.path.join(dir,f) for f in archivos_resultados]
+filepaths = [os.path.join(dir_1,f) for f in archivos_resultados]
 meta_1,files_1,time_1,temperatura_1,Mr_1,Hc_1,campo_max_1,mag_max_1,xi_M_0_1,frecuencia_fund_1,magnitud_fund_1,dphi_fem_1,SAR_1_1,tau_1_1,N1 = lector_resultados(filepaths[0])
 meta_2,files_2,time_2,temperatura_2,Mr_2,Hc_2,campo_max_2,mag_max_2,xi_M_0_2,frecuencia_fund_2,magnitud_fund_2,dphi_fem_2,SAR_1_2,tau_1_2,N2 = lector_resultados(filepaths[1])
 meta_3,files_3,time_3,temperatura_3,Mr_3,Hc_3,campo_max_3,mag_max_3,xi_M_0_3,frecuencia_fund_3,magnitud_fund_3,dphi_fem_3,SAR_1_3,tau_1_3,N3 = lector_resultados(filepaths[2])
@@ -190,7 +190,7 @@ taus_1=np.array([ufloat(np.mean(tau_1_1),np.std(tau_1_1)),ufloat(np.mean(tau_1_2
 SARs_1=np.array([ufloat(np.mean(SAR_1_1),np.std(SAR_1_1)),ufloat(np.mean(SAR_1_2),np.std(SAR_1_2)),ufloat(np.mean(SAR_1_3),np.std(SAR_1_3))])
 
 for i,ar in enumerate(archivos_resultados):
-    print('File:',ar,f'- tau: {taus_1[i]:.2e} s',f'- SAR: {SARs_1[i]:.1f} W/g')
+    print('File:',ar,f'- tau: {taus_1[i]:.2f} ns',f'- SAR: {SARs_1[i]:.1f} W/g')
 ufloat(np.mean([t.nominal_value for t in taus_1]),np.std([t.nominal_value for t in taus_1]))
 
 print(f'\nPromedio de las {len(taus_1)} medidas:')
@@ -211,15 +211,15 @@ plt.xlabel('Indx')
 plt.title(r'$\tau$ - '+ identif_1)
 plt.show()
 
-archivos_ciclos = [f for f in os.listdir(dir) if  fnmatch.fnmatch(f, '*promedio*')]
-archivos_ciclos.sort()
-filepaths = [os.path.join(dir,f) for f in archivos_ciclos]
-for ac in archivos_ciclos:
+archivos_ciclos_1 = [f for f in os.listdir(dir_1) if  fnmatch.fnmatch(f, '*promedio*')]
+archivos_ciclos_1.sort()
+filepaths_1 = [os.path.join(dir_1,f) for f in archivos_ciclos_1]
+for ac in archivos_ciclos_1:
     print(ac)
 
 fig1,ax1=plt.subplots(constrained_layout=True)
 
-for i,fp in enumerate(filepaths):
+for i,fp in enumerate(filepaths_1):
     t,H,M,metadata=lector_ciclos(fp)
     ax1.plot(H,M,label=f'{SARs_1[i]:1f} W/g')
 
@@ -234,19 +234,19 @@ plt.show()
 
 #%% 135 15 
 identif_2='135_15'
-dir = os.path.join(os.getcwd(),identif_2)
-archivos_resultados = [f for f in os.listdir(dir) if  fnmatch.fnmatch(f, '*resultados*')]
+dir_2 = os.path.join(os.getcwd(),identif_2)
+archivos_resultados = [f for f in os.listdir(dir_2) if  fnmatch.fnmatch(f, '*resultados*')]
 archivos_resultados.sort()
-filepaths = [os.path.join(dir,f) for f in archivos_resultados]
+filepaths = [os.path.join(dir_2,f) for f in archivos_resultados]
 meta_1,files_1,time_1,temperatura_1,Mr_1,Hc_1,campo_max_1,mag_max_1,xi_M_0_1,frecuencia_fund_1,magnitud_fund_1,dphi_fem_1,SAR_2_1,tau_2_1,N1 = lector_resultados(filepaths[0])
 meta_2,files_2,time_2,temperatura_2,Mr_2,Hc_2,campo_max_2,mag_max_2,xi_M_0_2,frecuencia_fund_2,magnitud_fund_2,dphi_fem_2,SAR_2_2,tau_2_2,N2 = lector_resultados(filepaths[1])
 meta_3,files_3,time_3,temperatura_3,Mr_3,Hc_3,campo_max_3,mag_max_3,xi_M_0_3,frecuencia_fund_3,magnitud_fund_3,dphi_fem_3,SAR_2_3,tau_2_3,N3 = lector_resultados(filepaths[2])
 
-taus_2=np.array([ufloat(np.mean(tau_2_1),np.std(tau_2_1)),ufloat(np.mean(tau_2_2),np.std(tau_2_2)),ufloat(np.mean(tau_2_3),np.std(tau_2_3))])
+taus_2=np.array([ufloat(np.mean(tau_2_1),np.std(tau_2_1)),ufloat(np.mean(tau_2_2),np.std(tau_2_2)),ufloat(np.mean(tau_2_3),np.std(tau_2_3))])*1e9
 SARs_2=np.array([ufloat(np.mean(SAR_2_1),np.std(SAR_2_1)),ufloat(np.mean(SAR_2_2),np.std(SAR_2_2)),ufloat(np.mean(SAR_2_3),np.std(SAR_2_3))])
 
 for i,ar in enumerate(archivos_resultados):
-    print('File:',ar,f'- tau: {taus_2[i]:.2e} s',f'- SAR: {SARs_2[i]:.1f} W/g')
+    print('File:',ar,f'- tau: {taus_2[i]:.2f} ns',f'- SAR: {SARs_2[i]:.1f} W/g')
 ufloat(np.mean([t.nominal_value for t in taus_2]),np.std([t.nominal_value for t in taus_2]))
 
 print(f'\nPromedio de las {len(taus_2)} medidas:')
@@ -267,15 +267,15 @@ plt.xlabel('Indx')
 plt.title(r'$\tau$ - '+ identif_2)
 plt.show()
 
-archivos_ciclos = [f for f in os.listdir(dir) if  fnmatch.fnmatch(f, '*promedio*')]
-archivos_ciclos.sort()
-filepaths = [os.path.join(dir,f) for f in archivos_ciclos]
-for ac in archivos_ciclos:
+archivos_ciclos_2 = [f for f in os.listdir(dir_2) if  fnmatch.fnmatch(f, '*promedio*')]
+archivos_ciclos_2.sort()
+filepaths_2 = [os.path.join(dir_2,f) for f in archivos_ciclos_2]
+for ac in archivos_ciclos_2:
     print(ac)
 
 fig1,ax1=plt.subplots(constrained_layout=True)
 
-for i,fp in enumerate(filepaths):
+for i,fp in enumerate(filepaths_2):
     t,H,M,metadata=lector_ciclos(fp)
     ax1.plot(H,M,label=f'{SARs_2[i]:1f} W/g')
 
@@ -289,10 +289,10 @@ plt.savefig('ciclos_promedio_'+identif_2+'.png',dpi=300)
 plt.show()
 #%% 265 10
 identif_3='265_10'
-dir = os.path.join(os.getcwd(),identif_3)
-archivos_resultados = [f for f in os.listdir(dir) if  fnmatch.fnmatch(f, '*resultados*')]
-archivos_resultados.sort()
-filepaths = [os.path.join(dir,f) for f in archivos_resultados]
+dir_3 = os.path.join(os.getcwd(),identif_3)
+archivos_resultados_3 = [f for f in os.listdir(dir_3) if  fnmatch.fnmatch(f, '*resultados*')]
+archivos_resultados_3.sort()
+filepaths = [os.path.join(dir_3,f) for f in archivos_resultados_3]
 
 meta_1,files_1,time_1,temperatura_1,Mr_1,Hc_1,campo_max_1,mag_max_1,xi_M_0_1,frecuencia_fund_1,magnitud_fund_1,dphi_fem_1,SAR_3_1,tau_3_1,N1 = lector_resultados(filepaths[0])
 meta_2,files_2,time_2,temperatura_2,Mr_2,Hc_2,campo_max_2,mag_max_2,xi_M_0_2,frecuencia_fund_2,magnitud_fund_2,dphi_fem_2,SAR_3_2,tau_3_2,N2 = lector_resultados(filepaths[1])
@@ -302,7 +302,7 @@ taus_3=np.array([ufloat(np.mean(tau_3_1),np.std(tau_3_1)),ufloat(np.mean(tau_3_2
 SARs_3=np.array([ufloat(np.mean(SAR_3_1),np.std(SAR_3_1)),ufloat(np.mean(SAR_3_2),np.std(SAR_3_2)),ufloat(np.mean(SAR_3_3),np.std(SAR_3_3))])
 
 for i,ar in enumerate(archivos_resultados):
-    print('File:',ar,f'- tau: {taus_3[i]:.2e} s',f'- SAR: {SARs_3[i]:.1f} W/g')
+    print('File:',ar,f'- tau: {taus_3[i]:.2f} ns',f'- SAR: {SARs_3[i]:.1f} W/g')
 ufloat(np.mean([t.nominal_value for t in taus_3]),np.std([t.nominal_value for t in taus_3]))
 
 print(f'\nPromedio de las {len(taus_3)} medidas:')
@@ -324,33 +324,32 @@ plt.title(identif_3)
 #plt.savefig('tau_'+identif_3+'.png',dpi=300)
 plt.show()
 #CICLOS
-archivos_ciclos = [f for f in os.listdir(dir) if  fnmatch.fnmatch(f, '*promedio*')]
-archivos_ciclos.sort()
-filepaths = [os.path.join(dir,f) for f in archivos_ciclos]
-for ac in archivos_ciclos:
+archivos_ciclos_3 = [f for f in os.listdir(dir_3) if  fnmatch.fnmatch(f, '*promedio*')]
+archivos_ciclos_3.sort()
+filepaths_3 = [os.path.join(dir_3,f) for f in archivos_ciclos_3]
+for ac in archivos_ciclos_3:
     print(ac)
 
 fig2,ax2=plt.subplots(constrained_layout=True)
 
-for i,fp in enumerate(filepaths):
+for i,fp in enumerate(filepaths_3):
     t,H,M,metadata=lector_ciclos(fp)
     ax2.plot(H,M,label=f'{SARs_3[i]:1f} W/g')
-ax2.text(0.95,0.1,f'<SAR> = {SAR3:.2uf} W/g',bbox=dict(alpha=0.8),transform=ax.transAxes,ha='right', va='bottom')
+ax2.text(0.95,0.1,f'<SAR> = {SAR3:.2uf} W/g',bbox=dict(alpha=0.8),transform=ax2.transAxes,ha='right', va='bottom')
 ax2.set_ylabel('M (A/m)')
 ax2.set_xlabel('H (A/m)')
 ax2.legend()
 ax2.grid()
 plt.title('Ciclos promedio - '+identif_3)
 plt.savefig('ciclos_promedio_'+identif_3+'.png',dpi=300)
-
 plt.show()
 
 #%% 265 15
 identif_4='265_15'
-dir = os.path.join(os.getcwd(),identif_4)
-archivos_resultados = [f for f in os.listdir(dir) if  fnmatch.fnmatch(f, '*resultados*')]
+dir_4 = os.path.join(os.getcwd(),identif_4)
+archivos_resultados = [f for f in os.listdir(dir_4) if  fnmatch.fnmatch(f, '*resultados*')]
 archivos_resultados.sort()
-filepaths = [os.path.join(dir,f) for f in archivos_resultados]
+filepaths = [os.path.join(dir_4,f) for f in archivos_resultados]
 
 meta_1,files_1,time_1,temperatura_1,Mr_1,Hc_1,campo_max_1,mag_max_1,xi_M_0_1,frecuencia_fund_1,magnitud_fund_1,dphi_fem_1,SAR_4_1,tau_4_1,N1 = lector_resultados(filepaths[0])
 meta_2,files_2,time_2,temperatura_2,Mr_2,Hc_2,campo_max_2,mag_max_2,xi_M_0_2,frecuencia_fund_2,magnitud_fund_2,dphi_fem_2,SAR_4_2,tau_4_2,N2 = lector_resultados(filepaths[1])
@@ -360,7 +359,7 @@ taus_4=np.array([ufloat(np.mean(tau_4_1),np.std(tau_4_1)),ufloat(np.mean(tau_4_2
 SARs_4=np.array([ufloat(np.mean(SAR_4_1),np.std(SAR_4_1)),ufloat(np.mean(SAR_4_2),np.std(SAR_4_2)),ufloat(np.mean(SAR_4_3),np.std(SAR_4_3))])
 
 for i,ar in enumerate(archivos_resultados):
-    print('File:',ar,f'- tau: {taus_4[i]:.2e} s',f'- SAR: {SARs_4[i]:.1f} W/g')
+    print('File:',ar,f'- tau: {taus_4[i]:.2f} ns',f'- SAR: {SARs_4[i]:.1f} W/g')
 ufloat(np.mean([t.nominal_value for t in taus_4]),np.std([t.nominal_value for t in taus_4]))
 
 print(f'\nPromedio de las {len(taus_4)} medidas:')
@@ -382,15 +381,15 @@ plt.title(identif_4)
 #plt.savefig('tau_'+identif_4+'.png',dpi=300)
 plt.show()
 #CICLOS
-archivos_ciclos = [f for f in os.listdir(dir) if  fnmatch.fnmatch(f, '*promedio*')]
-archivos_ciclos.sort()
-filepaths = [os.path.join(dir,f) for f in archivos_ciclos]
-for ac in archivos_ciclos:
+archivos_ciclos_4 = [f for f in os.listdir(dir_4) if  fnmatch.fnmatch(f, '*promedio*')]
+archivos_ciclos_4.sort()
+filepaths_4 = [os.path.join(dir_4,f) for f in archivos_ciclos_4]
+for ac in archivos_ciclos_4:
     print(ac)
 
 fig2,ax2=plt.subplots(constrained_layout=True)
 
-for i,fp in enumerate(filepaths):
+for i,fp in enumerate(filepaths_4):
     t,H,M,metadata=lector_ciclos(fp)
     ax2.plot(H,M,label=f'{SARs_4[i]:1f} W/g')
 ax2.text(0.95,0.1,f'<SAR> = {SAR4:.2uf} W/g',bbox=dict(alpha=0.8),transform=ax.transAxes,ha='right', va='bottom')
@@ -402,7 +401,7 @@ plt.title('Ciclos promedio - '+identif_4)
 plt.savefig('ciclos_promedio_'+identif_4+'.png',dpi=300)
 
 plt.show()
-#%% PLOT ALL
+#%% PLOT ALL TAUS
 
 fig,((ax1,ax2),(ax3,ax4))=plt.subplots(2,2,figsize=(12,8),constrained_layout=True)
 
@@ -438,28 +437,37 @@ ax4.set_title(identif_4)
 
 for ax in [ax1,ax2,ax3,ax4]:
     ax.set_xlabel('Indx')
-    ax.set_ylabel(r'$\tau$ (s)')
+    ax.set_ylabel(r'$\tau$ (ns)')
     ax.legend()
     ax.grid()
-plt.suptitle('Ni=0 @citrato - 3ra repeticion',fontsize=14)
-plt.savefig('tau_Ni0_C_recubierta.png',dpi=300,facecolor='w')
+plt.suptitle('Ni=0 @citrato - 4ta repeticion',fontsize=14)
+plt.savefig('tau_Ni0_D_recubierta.png',dpi=300,facecolor='w')
 
-# #%% PLOTEO TODOS LOS CICLOS PROMEDIO
-# # Copiar el contenido de la primera figura al nuevo subplot
-# new_fig, (new_ax1, new_ax2) = plt.subplots(1, 2, figsize=(12, 5))
+#%% PLOTEO TODOS LOS CICLOS PROMEDIO
+fig,ax=plt.subplots(constrained_layout=True)
 
-# for line in ax1.get_lines():
-#     new_ax1.plot(line.get_xdata(), line.get_ydata(), label=line.get_label())
-#     new_ax1.set_title(ax1.get_title())
-#     new_ax1.legend(loc='best')
+for i,fp in enumerate(filepaths_1):
+    t,H,M,metadata=lector_ciclos(fp)
+    ax.plot(H,M,color='tab:blue',label=identif_1)
 
-# # Copiar el contenido de la segunda figura al nuevo subplot
-# for line in ax2.get_lines():
-#     new_ax2.plot(line.get_xdata(), line.get_ydata(), label=line.get_label())
-#     new_ax2.set_title(ax2.get_title())
-#     new_ax2.legend(loc='best')
+for i,fp in enumerate(filepaths_2):
+    t,H,M,metadata=lector_ciclos(fp)
+    ax.plot(H,M,color='tab:orange',label=identif_2)
 
-# # Ajustar los diseños
-# plt.tight_layout()
+for i,fp in enumerate(filepaths_3):
+    t,H,M,metadata=lector_ciclos(fp)
+    ax.plot(H,M,color='tab:green',label=identif_3)
+
+for i,fp in enumerate(filepaths_4):
+    t,H,M,metadata=lector_ciclos(fp)
+    ax.plot(H,M,color='tab:red',label=identif_4)
+    
+#ax.text(0.95,0.1,f'<SAR> = {SAR4:.2uf} W/g',bbox=dict(alpha=0.8),transform=ax.transAxes,ha='right', va='bottom')
+ax.set_ylabel('M (A/m)')
+ax.set_xlabel('H (A/m)')
+ax.legend()
+ax.grid()
+plt.title('Ciclos promedio')
+plt.savefig('ciclos_promedio_all.png',dpi=300)
 # plt.show()
 # %%
