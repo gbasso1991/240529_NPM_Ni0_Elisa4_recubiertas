@@ -223,7 +223,7 @@ for i,fp in enumerate(filepaths_1):
     t,H,M,metadata=lector_ciclos(fp)
     ax1.plot(H,M,label=f'{SARs_1[i]:1f} W/g')
 
-ax1.text(0.95,0.1,f'<SAR> = {SAR1:.2uf} W/g',bbox=dict(alpha=0.8),transform=ax.transAxes,ha='right', va='bottom')
+ax1.text(0.95,0.1,f'<SAR> = {SAR1:.2uf} W/g',bbox=dict(alpha=0.8),transform=ax1.transAxes,ha='right', va='bottom')
 ax1.set_ylabel('M (A/m)')
 ax1.set_xlabel('H (A/m)')
 ax1.legend()
@@ -279,7 +279,7 @@ for i,fp in enumerate(filepaths_2):
     t,H,M,metadata=lector_ciclos(fp)
     ax1.plot(H,M,label=f'{SARs_2[i]:1f} W/g')
 
-ax1.text(0.95,0.1,f'<SAR> = {SAR2:.2uf} W/g',bbox=dict(alpha=0.8),transform=ax.transAxes,ha='right', va='bottom')
+ax1.text(0.95,0.1,f'<SAR> = {SAR2:.2uf} W/g',bbox=dict(alpha=0.8),transform=ax1.transAxes,ha='right', va='bottom')
 ax1.set_ylabel('M (A/m)')
 ax1.set_xlabel('H (A/m)')
 ax1.legend()
@@ -392,7 +392,7 @@ fig2,ax2=plt.subplots(constrained_layout=True)
 for i,fp in enumerate(filepaths_4):
     t,H,M,metadata=lector_ciclos(fp)
     ax2.plot(H,M,label=f'{SARs_4[i]:1f} W/g')
-ax2.text(0.95,0.1,f'<SAR> = {SAR4:.2uf} W/g',bbox=dict(alpha=0.8),transform=ax.transAxes,ha='right', va='bottom')
+ax2.text(0.95,0.1,f'<SAR> = {SAR4:.2uf} W/g',bbox=dict(alpha=0.8),transform=ax2.transAxes,ha='right', va='bottom')
 ax2.set_ylabel('M (A/m)')
 ax2.set_xlabel('H (A/m)')
 ax2.legend()
@@ -444,32 +444,56 @@ plt.suptitle('Ni=0 @citrato - 4ta repeticion',fontsize=14)
 plt.savefig('tau_Ni0_D_recubierta.png',dpi=300,facecolor='w')
 
 #%% PLOTEO TODOS LOS CICLOS PROMEDIO
-fig,(ax1,ax2)=plt.subplots(ncols=2,figsize=(10,4),constrained_layout=True)
+from matplotlib.colors import LinearSegmentedColormap
+# Crear paletas de colores basadas en azul, naranja, verde y rojo
+blue_palette = LinearSegmentedColormap.from_list("blue_palette", ["lightblue", "blue"])
+orange_palette = LinearSegmentedColormap.from_list("orange_palette", ["moccasin", "orange"])
+green_palette = LinearSegmentedColormap.from_list("green_palette", ["lightgreen", "green"])
+red_palette = LinearSegmentedColormap.from_list("red_palette", ["lightcoral", "red"])
 
-for i,fp in enumerate(filepaths_1):
-    t,H,M,metadata=lector_ciclos(fp)
-    ax1.plot(H,M,color='tab:blue',label=identif_1)
+fig, (ax1, ax2) = plt.subplots(ncols=2, figsize=(10, 4), constrained_layout=True)
 
-for i,fp in enumerate(filepaths_2):
-    t,H,M,metadata=lector_ciclos(fp)
-    ax2.plot(H,M,color='tab:orange',label=identif_2)
+# Número de ciclos en cada conjunto (ajusta esto según tus datos)
+num_cycles_1 = len(filepaths_1)
+num_cycles_2 = len(filepaths_2)
+num_cycles_3 = len(filepaths_3)
+num_cycles_4 = len(filepaths_4)
 
-for i,fp in enumerate(filepaths_3):
-    t,H,M,metadata=lector_ciclos(fp)
-    ax1.plot(H,M,color='tab:green',label=identif_3)
+# Crear listas de colores para cada conjunto
+colors_1 = blue_palette(np.linspace(0, 1, num_cycles_1))
+colors_2 = orange_palette(np.linspace(0, 1, num_cycles_2))
+colors_3 = green_palette(np.linspace(0, 1, num_cycles_3))
+colors_4 = red_palette(np.linspace(0, 1, num_cycles_4))
 
-for i,fp in enumerate(filepaths_4):
-    t,H,M,metadata=lector_ciclos(fp)
-    ax2.plot(H,M,color='tab:red',label=identif_4)
-ax1.set_title('38 kA/m')    
+for i, fp in enumerate(filepaths_1):
+    t, H, M, metadata = lector_ciclos(fp)
+    ax1.plot(H, M, color=colors_1[i], label=f'{identif_1[:3]}_{i}')
+
+for i, fp in enumerate(filepaths_2):
+    t, H, M, metadata = lector_ciclos(fp)
+    ax2.plot(H, M, color=colors_2[i], label=f'{identif_2[:3]}_{i}')
+
+for i, fp in enumerate(filepaths_3):
+    t, H, M, metadata = lector_ciclos(fp)
+    ax1.plot(H, M, color=colors_3[i], label=f'{identif_3[:3]}_{i}')
+
+for i, fp in enumerate(filepaths_4):
+    t, H, M, metadata = lector_ciclos(fp)
+    ax2.plot(H, M, color=colors_4[i], label=f'{identif_4[:3]}_{i}')
+
+ax1.set_title('38 kA/m')
 ax2.set_title('57 kA/m')
-# plt.show()
-for ax in [ax1,ax2]:
+
+ax1.set_xticks([-38e3, 0, 38e3])
+ax2.set_xticks([-57e3, -38e3, 0, 38e3, 57e3])
+
+for ax in [ax1, ax2]:
     ax.set_xlabel('H (A/m)')
     ax.set_ylabel('M (A/m)')
     ax.legend()
     ax.grid()
-plt.suptitle('Ciclos promedio',fontsize=14)
-plt.savefig('ciclos_promedio_all.png',dpi=300)
+
+plt.suptitle('Ciclos promedio - Ni=0 @citrato',fontsize=14)
+plt.savefig('ciclos_promedio_all_Ni0_recubiertas.png',dpi=300)
 
 # %%
